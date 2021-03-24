@@ -1,10 +1,12 @@
-// See the first spice blend (the spice blend with an ID of 1), including its title, image, and list of ingredients, when the page loads
+
 
 const url = 'http://localhost:3000/spiceblends'
 const spiceBlendDetail = document.querySelector('div#spice-blend-detail')
 const detailImg = spiceBlendDetail.children[0]
-const title = spiceBlendDetail.children[1]
+const blendTitle = spiceBlendDetail.children[1]
 const ingredientsContainer = spiceBlendDetail.children[2]
+const newTitleForm = document.querySelector('form#update-form')
+const addIngredientForm = document.querySelector('form#ingredient-form')
 
 /*************************** deliverable 1*****************************/
 
@@ -20,7 +22,8 @@ function fetchSpiceOne () {
 
 function renderOneSpiceBlend (spiceObj) {
     detailImg.src = spiceObj.image
-    title.textContent = spiceObj.title
+    detailImg.dataset.id = spiceObj.id
+    blendTitle.textContent = spiceObj.title
 
     spiceObj.ingredients.forEach(ingredient => {
         const li = document.createElement('li')
@@ -31,3 +34,36 @@ function renderOneSpiceBlend (spiceObj) {
     })
 
 }
+
+/******************************** event listeners ********************************/
+
+newTitleForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const id = detailImg.dataset.id
+    const title = e.target[0].value
+    
+    fetch(`${url}/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({title})
+    })
+    .then(res => res.json())
+    .then(({title}) => {
+        blendTitle.textContent = title
+    } )
+
+
+})
+
+addIngredientForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    console.log('clicked')
+    console.log(e.target)
+
+})
+
+
