@@ -109,13 +109,23 @@
     },
     {
       "name": "turmeric!!",
-      "spiceblendId": "1",
+      "spiceblendId": 1,
       "id": 18
     },
     {
       "name": "posh",
-      "spiceblendId": "1",
+      "spiceblendId": 1,
       "id": 19
+    },
+    {
+      "name": "banana",
+      "spiceblendId": 4,
+      "id": 20
+    },
+    {
+      "name": "banana",
+      "spiceblendId": 4,
+      "id": 21
     }
   ]
 }

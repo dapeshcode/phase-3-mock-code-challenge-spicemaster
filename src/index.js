@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function fetchSpiceOne () {
     fetch(`${url}/1`)
-    .then(res => res.json())
-    .then(spiceOne => renderOneSpiceBlend(spiceOne))
+        .then(res => res.json())
+        .then(spiceOne => renderOneSpiceBlend(spiceOne))
 }
 
 function renderOneSpiceBlend (spiceObj) {
@@ -55,10 +55,10 @@ newTitleForm.addEventListener('submit', (e) => {
         },
         body: JSON.stringify({title})
     })
-    .then(res => res.json())
-    .then(({title}) => {
-        blendTitle.textContent = title
-    })
+        .then(res => res.json())
+        .then(({title}) => {
+            blendTitle.textContent = title
+        })
 
     e.target.reset()
 
@@ -72,10 +72,9 @@ addIngredientForm.addEventListener('submit', (e) => {
     li.textContent = name
     ingredientsContainer.append(li)
 
-    const newIngredient = {
-        name,
-        spiceblendId: detailImg.dataset.id
-    }
+    
+     spiceblendId: detailImg.dataset.id
+    
     
 
     fetch('http://localhost:3000/ingredients', {
@@ -84,7 +83,10 @@ addIngredientForm.addEventListener('submit', (e) => {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify(newIngredient)
+        body: JSON.stringify({
+            name,
+            spiceblendId: parseInt(spiceBlendId)
+        })
     })
     
     e.target.reset()
@@ -97,8 +99,8 @@ addIngredientForm.addEventListener('submit', (e) => {
 const spiceImages = document.querySelector('div#spice-images')
 
 fetch(url)
-.then(res => res.json())
-.then(allBlends => renderAllBlendImgs(allBlends))
+    .then(res => res.json())
+    .then(allBlends => renderAllBlendImgs(allBlends))
 
 function renderOneBlendImg ({image, id}) {
     const img = document.createElement('img')
@@ -115,6 +117,7 @@ function renderAllBlendImgs (allBlends) {
 
 spiceImages.addEventListener('click', (e) => {
     if(e.target.matches('img')) {
+        ingredientsContainer.innerHTML = " "
         fetch(`${url}/${e.target.dataset.id}`)
         .then(res => res.json())
         .then(blendObj => renderOneSpiceBlend(blendObj))
