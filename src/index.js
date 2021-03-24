@@ -76,13 +76,13 @@ addIngredientForm.addEventListener('submit', (e) => {
         spiceblendId: detailImg.dataset.id
     }
 
-    fetch(url, {
+    fetch('http://localhost:3000/ingredients', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ingredients: newIngredient})
+        body: JSON.stringify(newIngredient)
     })
 
 
