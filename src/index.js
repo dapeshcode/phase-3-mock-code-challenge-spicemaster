@@ -60,6 +60,7 @@ newTitleForm.addEventListener('submit', (e) => {
         blendTitle.textContent = title
     })
 
+    e.target.reset()
 
 })
 
@@ -86,7 +87,7 @@ addIngredientForm.addEventListener('submit', (e) => {
         body: JSON.stringify(newIngredient)
     })
     
-    addIngredientForm.reset()
+    e.target.reset()
 
 })
 
