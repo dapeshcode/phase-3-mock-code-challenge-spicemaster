@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function fetchSpiceOne () {
     fetch(`${url}/1`)
-.then(res => res.json())
-.then(spiceOne => renderOneSpiceBlend(spiceOne))
+    .then(res => res.json())
+    .then(spiceOne => renderOneSpiceBlend(spiceOne))
 }
 
 function renderOneSpiceBlend (spiceObj) {
@@ -70,6 +70,53 @@ addIngredientForm.addEventListener('submit', (e) => {
     const li = document.createElement('li')
     li.textContent = name
     ingredientsContainer.append(li)
+
+    const newIngredient = {
+        name,
+        spiceblendId: detailImg.dataset.id
+    }
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ingredients: newIngredient})
+    })
+
+
+})
+
+
+/*************************** advanced ********************************/
+
+const spiceImages = document.querySelector('div#spice-images')
+
+fetch(url)
+.then(res => res.json())
+.then(allBlends => renderAllBlendImgs(allBlends))
+
+function renderOneBlendImg ({image, id}) {
+    const img = document.createElement('img')
+    img.dataset.id = id
+    img.src = image
+    spiceImages.append(img)
+}
+
+function renderAllBlendImgs (allBlends) {
+    allBlends.forEach(blend => {
+        renderOneBlendImg(blend)
+    })
+}
+
+spiceImages.addEventListener('click', (e) => {
+    if(e.target.matches('img')) {
+        fetch(`${url}/${e.target.dataset.id}`)
+        .then(res => res.json())
+        .then(blendObj => renderOneSpiceBlend(blendObj))
+        
+    }
 })
 
 
