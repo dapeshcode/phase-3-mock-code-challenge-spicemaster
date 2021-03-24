@@ -26,13 +26,17 @@ function renderOneSpiceBlend (spiceObj) {
     blendTitle.textContent = spiceObj.title
 
     spiceObj.ingredients.forEach(ingredient => {
-        const li = document.createElement('li')
-        li.dataset.id = ingredient.id
-        li.textContent = ingredient.name
-        ingredientsContainer.append(li)
 
+        renderOneIngredient(ingredient)
     })
+}
 
+function renderOneIngredient ({name, id}) {
+    
+        const li = document.createElement('li')
+        li.dataset.id = id
+        li.textContent = name
+        ingredientsContainer.append(li)
 }
 
 /******************************** event listeners ********************************/
@@ -54,16 +58,18 @@ newTitleForm.addEventListener('submit', (e) => {
     .then(res => res.json())
     .then(({title}) => {
         blendTitle.textContent = title
-    } )
+    })
 
 
 })
 
 addIngredientForm.addEventListener('submit', (e) => {
     e.preventDefault()
-    console.log('clicked')
-    console.log(e.target)
-
+    
+    const name = e.target[0].value
+    const li = document.createElement('li')
+    li.textContent = name
+    ingredientsContainer.append(li)
 })
 
 
